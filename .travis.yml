@@ -21,3 +21,16 @@ after_success:
     - docker push beezi2018/fib-nginx
     - docker push beezi2018/fib-server
     - docker push beezi2018/fib-worker
+
+deploy:
+    edge: true
+    provider: elasticbeanstalk
+    region: eu-west-1
+    app: fib-docker
+    end: FibDocker-env
+    bucket_name: elasticbeanstalk-eu-west-1-108130739385	
+    bucket_path: fib-docker
+    on:
+      branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
