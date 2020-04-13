@@ -14,7 +14,7 @@ after_success:
     - docker build -t beezi2018/fib-nginx ./nginx
     - docker build -t beezi2018/fib-server ./server
     - docker build -t beezi2018/fib-worker ./worker
-    #Log in to the docker CLI
+    #Log in to the docker  CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     #Take those images and push them to the docker hub
     - docker push beezi2018/fib-frontend
