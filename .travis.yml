@@ -1,0 +1,23 @@
+language: generic
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t beezi2018/fib-react-test -f ./frontend/Dockerfile.dev ./frontend
+
+script:
+    - docker run -e CI=true beezi2018/fib-react-test npm test
+
+after_success:
+    - docker build -t beezi2018/fib-frontend ./frontend
+    - docker build -t beezi2018/fib-nginx ./nginx
+    - docker build -t beezi2018/fib-server ./server
+    - docker build -t beezi2018/fib-worker ./worker
+    #Log in to the docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    #Take those images and push them to the docker hub
+    - docker push beezi2018/fib-frontend
+    - docker push beezi2018/fib-nginx
+    - docker push beezi2018/fib-server
+    - docker push beezi2018/fib-worker
